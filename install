@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+stow -D nvim
+stow nvim
