@@ -7,6 +7,7 @@ Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'mbbill/undotree'
 Plug 'tpope/vim-fugitive'
 Plug 'raimondi/delimitmate'
 Plug 'nvim-lua/popup.nvim'
@@ -16,10 +17,8 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 call plug#end()
 
-set runtimepath^=~/.vim runtimepath+=/.vim/after
-let &packpath = &runtimepath
-
 set nocompatible
+set guicursor=
 let mapleader = " "
 
 set number
@@ -27,9 +26,11 @@ set relativenumber
 
 set ruler
 set visualbell
+set termguicolors
+set scrolloff=8
+set colorcolumn=120
 
 set filetype 
-set path+=**/*
 
 set encoding=utf-8
 syntax on
@@ -38,6 +39,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set smartindent
+set nowrap
 
 set hidden
 
@@ -51,6 +53,10 @@ set ignorecase
 " Some servers have issues with backup files, see #649.
 set nobackup
 set nowritebackup
+set noswapfile
+set undodir=~/.vim/undodir
+set undofile
+set updatetime=50
 
 " Give more space for displaying messages.
 "set cmdheight=2
@@ -63,6 +69,8 @@ if has("nvim-0.5.0") || has("patch-8.1.1564")
 else
   set signcolumn=yes
 endif
+
+nnoremap <leader>u :UndotreeShow<CR>
 
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
@@ -228,5 +236,12 @@ require'nvim-treesitter.configs'.setup {
     -- Instead of true it can also be a list of languages
     additional_vim_regex_highlighting = false,
   },
+  indent = {
+    enable = true,
+  },
 }
 EOF
+
+" Filetype specific configurations
+autocmd FileType java setlocal shiftwidth=4 softtabstop=4 tabstop=4
+autocmd FileType xml setlocal shiftwidth=4 softtabstop=4 tabstop=4
