@@ -14,6 +14,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'vuki656/package-info.nvim'
 
 call plug#end()
 
@@ -240,6 +241,10 @@ require'nvim-treesitter.configs'.setup {
     enable = true,
   },
 }
+EOF
+
+lua <<EOF
+require('package-info').setup()
 EOF
 
 " Filetype specific configurations
