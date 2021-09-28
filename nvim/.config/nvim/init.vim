@@ -15,6 +15,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'vuki656/package-info.nvim'
+Plug 'MunifTanjim/nui.nvim'
 
 call plug#end()
 
