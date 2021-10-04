@@ -74,6 +74,10 @@ endif
 
 nnoremap <leader>u :UndotreeShow<CR>
 
+" Shortcuts for navigating quicklist
+map <C-j> :cn<CR>
+map <C-k> :cp<CR>
+
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
