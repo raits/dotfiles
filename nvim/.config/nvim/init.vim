@@ -35,7 +35,7 @@ set colorcolumn=120
 set filetype 
 
 set encoding=utf-8
-syntax on
+"syntax on
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
@@ -233,7 +233,9 @@ nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  ensure_installed = "all", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  sync_install = false,
+  auto_install = true,
   highlight = {
     enable = true,              -- false will disable the whole extension
     -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
