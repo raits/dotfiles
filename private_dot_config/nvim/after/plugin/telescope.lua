@@ -1,6 +1,6 @@
-require'telescope'.setup {
+require('telescope').setup {
   defaults = { 
-    file_ignore_patterns = {"node_modules", "build", "target"}
+    file_ignore_patterns = {"node_modules", "build", "target", "bin"}
   }
 }
 local builtin = require('telescope.builtin')
