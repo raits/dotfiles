@@ -1,9 +1,18 @@
 #!/bin/sh
 
 set -eu
+# https://github.com/dcreager/dotfiles/blob/main/install
+if [ -z "$USER" ]; then
+    USER=$(id -un)
+fi
+
+NVIM_VERSION=0.7.0
 
 echo >&2 "====================================================================="
 echo >&2 " Setting up codespaces environment"
+echo >&2 ""
+echo >&2 " USER        $USER"
+echo >&2 " HOME        $HOME"
 echo >&2 "====================================================================="
 
 # Make passwordless sudo work
@@ -16,7 +25,14 @@ echo >&2 " Installing required dependencies"
 echo >&2 "====================================================================="
 # Install ripgrep and fd-find for telescope
 sudo apt-get update
-sudo apt-get install -y ripgrep fd-find
+sudo apt-get install -y ripgrep fd-find libfuse2
+
+echo >&2 "====================================================================="
+echo >&2 " Installing neovim"
+echo >&2 "====================================================================="
+# Install neovim
+curl -L -o $HOME/bin/nvim https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim.appimage
+chmod a+x $HOME/bin/nvim
 
 echo >&2 "====================================================================="
 echo >&2 " Installing and running chezmoi"
@@ -47,11 +63,3 @@ echo "Running 'chezmoi $*'" >&2
 # exec: replace current process with chezmoi
 exec "$chezmoi" "$@"
 
-echo >&2 "====================================================================="
-echo >&2 " Installing neovim"
-echo >&2 "====================================================================="
-# Install neovim
-NVIM_VERSION=0.7.0
-sudo apt-get install -y libfuse2
-curl -L -o $HOME/bin/nvim https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim.appimage
-chmod a+x $HOME/bin/nvim
