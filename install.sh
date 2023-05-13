@@ -32,7 +32,8 @@ echo >&2 " Installing neovim"
 echo >&2 "====================================================================="
 # Install neovim
 curl -LO https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz
-tar xzvf nvim-linux64.tar.gz -C $HOME/.local/bin/nvim
+tar xzvf nvim-linux64.tar.gz -C $HOME/
+ln -s $HOME/nvim-linux64/bin/nvim $HOME/.local/bin/nvim
 chmod a+x $HOME/.local/bin/nvim
 
 echo >&2 "====================================================================="
