@@ -72,6 +72,7 @@ return require('packer').startup(function(use)
   }
   use("nvim-treesitter/nvim-treesitter-context");
   use('vuki656/package-info.nvim')
+  use("github/copilot.vim")
 
   if packer_bootstrap then
     require('packer').sync()
