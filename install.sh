@@ -68,5 +68,10 @@ set -- init --apply --source="${script_dir}"
 
 echo "Running 'chezmoi $*'" >&2
 # exec: replace current process with chezmoi
-exec "$chezmoi" "$@"
+"$chezmoi" "$@"
+
+echo >&2 "====================================================================="
+echo >&2 " Running PackerSync"
+echo >&2 "====================================================================="
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
