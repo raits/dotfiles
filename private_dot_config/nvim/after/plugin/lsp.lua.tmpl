@@ -7,7 +7,7 @@ lsp.ensure_installed({
   'html',
   'lua_ls',
   'rust_analyzer',
-  {{- if eq .work 1 }}
+  {{- if eq (index . "work") 1 }}
   -- work profile
   'vuels',
   'jdtls',
