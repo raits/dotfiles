@@ -6,7 +6,7 @@ if [ -z "$USER" ]; then
     USER=$(id -un)
 fi
 
-NVIM_VERSION=0.9.0
+NVIM_VERSION=0.9.1
 
 echo >&2 "====================================================================="
 echo >&2 " Setting up codespaces environment"
