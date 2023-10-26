@@ -7,14 +7,14 @@ lsp.ensure_installed({
   'html',
   'lua_ls',
   'rust_analyzer',
+  'volar',
+  'tailwindcss',
   {{- if eq (index . "work") 1 }}
   -- work profile
-  'vuels',
   'jdtls',
   'dockerls',
   {{- else }}
   -- personal profile
-  'volar',
   {{- end }}
 })
 
