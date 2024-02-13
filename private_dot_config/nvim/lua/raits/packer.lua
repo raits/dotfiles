@@ -16,8 +16,7 @@ vim.cmd.packadd('packer.nvim')
 return require('packer').startup(function(use)
   -- Packer can manage itself
   use 'wbthomason/packer.nvim'
-
-  use('github/copilot.vim')
+  use 'github/copilot.vim'
   use {
 	  'VonHeikemen/lsp-zero.nvim',
 	  branch = 'v2.x',
@@ -66,7 +65,13 @@ return require('packer').startup(function(use)
   
   use {
     'nvim-telescope/telescope.nvim', tag = '0.1.5',
-    requires = { {'nvim-lua/plenary.nvim'} }
+    requires = {
+      { "nvim-telescope/telescope-live-grep-args.nvim" },
+      {'nvim-lua/plenary.nvim'} 
+    },
+    config = function()
+      require("telescope").load_extension("live_grep_args")
+    end
   }
   use('nvim-tree/nvim-tree.lua')
 

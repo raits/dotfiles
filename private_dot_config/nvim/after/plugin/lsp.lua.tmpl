@@ -40,10 +40,13 @@ end)
 
 require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
 
-{{- if ne (index . "work") 1 }}
 require('lspconfig').volar.setup{
   filetypes = {'typescript', 'vue', 'json'}
 }
+
+{{- if eq (index . "work") 1 }}
+vim.fn.setenv('JAVA_HOME', '/home/raits/.sdkman/candidates/java/17.0.10-tem')
+--require('lspconfig').jdtls.setup({})
 {{- end }}
 
 lsp.setup()
