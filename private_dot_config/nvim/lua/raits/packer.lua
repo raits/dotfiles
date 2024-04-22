@@ -24,12 +24,8 @@ return require('packer').startup(function(use)
     requires = {
       -- LSP Support
       {'neovim/nvim-lspconfig'},
-      {
-        'williamboman/mason.nvim',
-        run = function()
-          pcall(vim.cmd, 'MasonUpdate')
-        end,
-      },
+      {'williamboman/mason.nvim'},
+      {'mfussenegger/nvim-jdtls'},
       {'williamboman/mason-lspconfig.nvim'},
 
       -- Autocompletion
