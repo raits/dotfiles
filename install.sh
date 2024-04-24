@@ -37,11 +37,6 @@ ln -s $HOME/nvim-linux64/bin/nvim $HOME/.local/bin/nvim
 chmod a+x $HOME/.local/bin/nvim
 
 echo >&2 "====================================================================="
-echo >&2 " Installing packer.nvim"
-echo >&2 "====================================================================="
-git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-
-echo >&2 "====================================================================="
 echo >&2 " Installing and running chezmoi"
 echo >&2 "====================================================================="
 # Set up and run chezmoi (https://github.com/chezmoi/dotfiles/blob/master/install.sh)
@@ -69,9 +64,3 @@ set -- init --apply --source="${script_dir}"
 echo "Running 'chezmoi $*'" >&2
 # exec: replace current process with chezmoi
 "$chezmoi" "$@"
-
-echo >&2 "====================================================================="
-echo >&2 " Running PackerSync"
-echo >&2 "====================================================================="
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-
