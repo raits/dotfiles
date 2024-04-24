@@ -7,11 +7,11 @@ return {
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
-      { 'folke/neodev.nvim', opts = {} },
+      { 'folke/neodev.nvim',       opts = {} },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -105,7 +105,7 @@ return {
 
       local servers = {
         tsserver = {},
-        csuls = {},
+        cssls = {},
         html = {},
         lua_ls = {
           settings = {
@@ -115,24 +115,24 @@ return {
               },
             },
           },
-        rust_analyzer = {},
-        volar = {},
-        tailwindcss = {},
-        --{{- if eq (index . "work") 1 }}
-        -- work profile
-        jdtls = {},
-        dockerls = {},
-        gradle_ls = {},
-        pyright = {},
-        --{{- else }}
-        -- personal profile
-        --{{- end }}
-        --
-        -- TODO: Look into:
-        --    Some languages (like typescript) have entire language plugins that can be useful:
-        --    https://github.com/pmizio/typescript-tools.nvim
-        --
-        --
+          rust_analyzer = {},
+          volar = {},
+          tailwindcss = {},
+          {{- if eq (index . "work") 1 }}
+          -- work profile
+          jdtls = {},
+          dockerls = {},
+          gradle_ls = {},
+          pyright = {},
+          {{- else }}
+          -- personal profile
+          {{- end }}
+          --
+          -- TODO: Look into:
+          --    Some languages (like typescript) have entire language plugins that can be useful:
+          --    https://github.com/pmizio/typescript-tools.nvim
+          --
+          --
 
         },
       }
@@ -165,10 +165,10 @@ return {
           end,
           tsserver = function()
             local vue_typescript_plugin = require('mason-registry')
-              .get_package('vue-language-server')
-              :get_install_path()
-              .. '/node_modules/@vue/language-server'
-              .. '/node_modules/@vue/typescript-plugin'
+                .get_package('vue-language-server')
+                :get_install_path()
+                .. '/node_modules/@vue/language-server'
+                .. '/node_modules/@vue/typescript-plugin'
 
             require('lspconfig').tsserver.setup({
               init_options = {
@@ -176,7 +176,7 @@ return {
                   {
                     name = "@vue/typescript-plugin",
                     location = vue_typescript_plugin,
-                    languages = {'javascript', 'typescript', 'vue'}
+                    languages = { 'javascript', 'typescript', 'vue' }
                   },
                 }
               },
