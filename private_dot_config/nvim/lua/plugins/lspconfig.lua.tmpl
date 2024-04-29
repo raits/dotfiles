@@ -163,6 +163,31 @@ return {
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
+          jdtls = function()
+            require('lspconfig').jdtls.setup({
+              settings = {
+                java = {
+                  configuration = {
+                    runtimes = {
+                      {
+                        name = 'JavaSE-11',
+                        path = vim.fn.expand('~/.sdkman/candidates/java/11.0.21-tem'),
+                      },
+                      {
+                        name = 'JavaSE-17',
+                        path = vim.fn.expand('~/.sdkman/candidates/java/17.0.10-tem'),
+                      },
+                      {
+                        name = 'JavaSE-21',
+                        path = vim.fn.expand('~/.sdkman/candidates/java/21.0.2-tem'),
+                        default = true,
+                      },
+                    }
+                  }
+                }
+              }
+            })
+          end,
           tsserver = function()
             local vue_typescript_plugin = require('mason-registry')
                 .get_package('vue-language-server')

@@ -1,6 +1,8 @@
 require("lazy").setup({
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 
+	"tpope/vim-fugitive", -- git interactions
+
 	-- "gc" to comment visual regions/lines
 	{ "numToStr/Comment.nvim", opts = {} },
 
@@ -16,6 +18,8 @@ require("lazy").setup({
 	-- fuzzy finder
 	require("plugins/telescope"),
 
+	require("plugins/nvim-java"),
+
 	require("plugins/lspconfig"),
 
 	require("plugins/conform"),
@@ -27,8 +31,6 @@ require("lazy").setup({
 	require("plugins/mini"),
 
 	require("plugins/treesitter"),
-
-	require("plugins/autopairs"),
 
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
