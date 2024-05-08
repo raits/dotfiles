@@ -152,7 +152,13 @@ return {
         'stylua', -- Used to format Lua code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
+      
+      {{- if eq (index . "work") 1 }}
+      -- work profile
+      require('java').setup()
+      {{- else }}
+      -- personal profile
+      {{- end }}
       require('mason-lspconfig').setup {
         handlers = {
           function(server_name)

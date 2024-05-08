@@ -3,6 +3,8 @@ require("lazy").setup({
 
 	"tpope/vim-fugitive", -- git interactions
 
+	"github/copilot.vim", -- copilot
+
 	-- "gc" to comment visual regions/lines
 	{ "numToStr/Comment.nvim", opts = {} },
 
@@ -18,7 +20,12 @@ require("lazy").setup({
 	-- fuzzy finder
 	require("plugins/telescope"),
 
+	{{- if eq (index . "work") 1 }}
+	-- work profile
 	require("plugins/nvim-java"),
+	{{- else }}
+	-- personal profile
+	{{- end }}
 
 	require("plugins/lspconfig"),
 
