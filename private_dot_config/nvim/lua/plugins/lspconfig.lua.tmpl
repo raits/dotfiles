@@ -1,5 +1,5 @@
 return {
-  { -- LSP Configuration & Plugins
+  { 
     'neovim/nvim-lspconfig',
     dependencies = {
       -- Automatically install LSPs and related tools to stdpath for Neovim
@@ -12,6 +12,7 @@ return {
       -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
       -- used for completion, annotations and signatures of Neovim apis
       { 'folke/neodev.nvim',       opts = {} },
+      { 'pmizio/typescript-tools.nvim' },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -104,7 +105,6 @@ return {
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
-        tsserver = {},
         cssls = {},
         html = {},
         lua_ls = {
@@ -115,26 +115,19 @@ return {
               },
             },
           },
-          rust_analyzer = {},
-          volar = {},
-          tailwindcss = {},
-          {{- if eq (index . "work") 1 }}
-          -- work profile
-          jdtls = {},
-          dockerls = {},
-          gradle_ls = {},
-          pyright = {},
-          {{- else }}
-          -- personal profile
-          {{- end }}
-          --
-          -- TODO: Look into:
-          --    Some languages (like typescript) have entire language plugins that can be useful:
-          --    https://github.com/pmizio/typescript-tools.nvim
-          --
-          --
-
         },
+        rust_analyzer = {},
+        volar = {},
+        tailwindcss = {},
+        {{- if eq (index . "work") 1 }}
+        -- work profile
+        jdtls = {},
+        dockerls = {},
+        gradle_ls = {},
+        pyright = {},
+        {{- else }}
+        -- personal profile
+        {{- end }}
       }
 
       -- Ensure the servers and tools above are installed
@@ -155,7 +148,7 @@ return {
       
       {{- if eq (index . "work") 1 }}
       -- work profile
-      require('java').setup()
+      -- require('java').setup()
       {{- else }}
       -- personal profile
       {{- end }}
@@ -163,9 +156,6 @@ return {
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for tsserver)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
@@ -185,7 +175,7 @@ return {
                       },
                       {
                         name = 'JavaSE-21',
-                        path = vim.fn.expand('~/.sdkman/candidates/java/21.0.2-tem'),
+                        path = vim.fn.expand('~/.sdkman/candidates/java/21.0.3-tem'),
                         default = true,
                       },
                     }
@@ -194,34 +184,67 @@ return {
               }
             })
           end,
-          tsserver = function()
-            local vue_typescript_plugin = require('mason-registry')
-                .get_package('vue-language-server')
-                :get_install_path()
-                .. '/node_modules/@vue/language-server'
-                .. '/node_modules/@vue/typescript-plugin'
+          volar = function()
+            require('lspconfig').volar.setup({
+              -- NOTE: Uncomment to enable volar in file types other than vue.
+              -- (Similar to Takeover Mode)
 
-            require('lspconfig').tsserver.setup({
+              filetypes = { "vue", "javascript", "typescript", "json" },
+
+              -- NOTE: Uncomment to restrict Volar to only Vue/Nuxt projects. This will enable Volar to work alongside other language servers (tsserver).
+
+              root_dir = require("lspconfig").util.root_pattern(
+                "vue.config.js",
+                "vue.config.ts",
+                "nuxt.config.js",
+                "nuxt.config.ts",
+                "vite.config.js",
+                "vite.config.ts"
+              ),
               init_options = {
-                plugins = {
-                  {
-                    name = "@vue/typescript-plugin",
-                    location = vue_typescript_plugin,
-                    languages = { 'javascript', 'typescript', 'vue' }
-                  },
-                }
+                vue = {
+                  hybridMode = true,
+                },
+                -- NOTE: This might not be needed. Uncomment if you encounter issues.
+
+                -- typescript = {
+                --   tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
+                -- },
+              },
+            })
+            require("typescript-tools").setup({
+              server = opts,
+              settings = {
+                tsserver_plugins = {
+                  "@vue/typescript-plugin",
+                },
               },
               filetypes = {
-                'javascript',
-                'javascriptreact',
-                'javascript.jsx',
-                'typescript',
-                'typescriptreact',
-                'typescript.tsx',
-                'vue',
+                "javascript",
+                "typescript",
+                "vue",
               },
             })
           end,
+          -- tsserver = function()
+          --   local vue_typescript_plugin = require('mason-registry')
+          --       .get_package('vue-language-server')
+          --       :get_install_path()
+          --       .. '/node_modules/@vue/language-server'
+          --       .. '/node_modules/@vue/typescript-plugin'
+
+          --   require('lspconfig').tsserver.setup({
+          --     init_options = {
+          --       plugins = {
+          --         {
+          --           name = "@vue/typescript-plugin",
+          --           location = vue_typescript_plugin,
+          --           languages = { 'vue' }
+          --         },
+          --       }
+          --     },
+          --   })
+          -- end,
         },
       }
     end,
