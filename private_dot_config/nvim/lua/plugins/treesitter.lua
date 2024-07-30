@@ -8,6 +8,7 @@ return {
 				"javascript",
 				"rust",
 				"java",
+				"regex",
 				"diff",
 				"json",
 				"yaml",
