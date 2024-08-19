@@ -3,7 +3,8 @@ unbind-key C-b
 set-option -g prefix C-a
 bind-key C-a send-prefix
 
-bind-key -n 'M-c' copy-mode
+unbind-key M
+bind-key M copy-mode
 set-window-option -g mode-keys vi
 
 set -g update-environment "SSH_ASKPASS SSH_AUTH_SOCK SSH_AGENT_PID SSH_CONNECTION"
