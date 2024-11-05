@@ -29,6 +29,8 @@ echo >&2 "====================================================================="
 echo >&2 " Installing neovim"
 echo >&2 "====================================================================="
 # Install neovim
+mkdir -p ~/.local
+cd ~/.local
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 chmod u+x nvim.appimage
 ./nvim.appimage --appimage-extract
