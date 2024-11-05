@@ -6,8 +6,6 @@ if [ -z "$USER" ]; then
     USER=$(id -un)
 fi
 
-NVIM_VERSION=0.9.5
-
 echo >&2 "====================================================================="
 echo >&2 " Setting up codespaces environment"
 echo >&2 ""
@@ -31,10 +29,11 @@ echo >&2 "====================================================================="
 echo >&2 " Installing neovim"
 echo >&2 "====================================================================="
 # Install neovim
-curl -LO https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux64.tar.gz
-tar xzvf nvim-linux64.tar.gz -C $HOME/
-ln -s $HOME/nvim-linux64/bin/nvim $HOME/.local/bin/nvim
-chmod a+x $HOME/.local/bin/nvim
+curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+chmod u+x nvim.appimage
+./nvim.appimage --appimage-extract
+mkdir ~/.local/bin
+ln -s ~/.local/squashfs-root/AppRun ~/.local/bin/nvim
 
 echo >&2 "====================================================================="
 echo >&2 " Installing and running chezmoi"
