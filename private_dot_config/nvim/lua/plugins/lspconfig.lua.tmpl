@@ -115,9 +115,24 @@ return {
             },
           },
         },
-        rust_analyzer = {},
+        rust_analyzer = {
+          procMacro = {
+            ignored = {
+              leptos_macro = {
+                "server",
+              },
+            },
+          },
+        },
         volar = {},
-        tailwindcss = {},
+        tailwindcss = {
+          filetypes = vim.list_extend({ 'rust' }, require("lspconfig").tailwindcss.filetypes or {}),
+          init_options = {
+            userLanguages = {
+              rust = "html",
+            },
+          },
+        },
         {{- if eq (index . "work") 1 }}
         -- work profile
         jdtls = {},
