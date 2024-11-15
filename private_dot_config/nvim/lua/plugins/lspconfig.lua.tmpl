@@ -11,7 +11,7 @@ return {
 
       'hrsh7th/cmp-nvim-lsp',
 
-      { 'pmizio/typescript-tools.nvim' },
+      -- { 'pmizio/typescript-tools.nvim' },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -199,7 +199,7 @@ return {
             })
           end,
           volar = function()
-            require('lspconfig').volar.setup({
+            require("lspconfig").volar.setup({
               -- NOTE: Uncomment to enable volar in file types other than vue.
               -- (Similar to Takeover Mode)
 
@@ -217,26 +217,13 @@ return {
               ),
               init_options = {
                 vue = {
-                  hybridMode = true,
+                  hybridMode = false,
                 },
                 -- NOTE: This might not be needed. Uncomment if you encounter issues.
 
                 -- typescript = {
                 --   tsdk = vim.fn.getcwd() .. "/node_modules/typescript/lib",
                 -- },
-              },
-            })
-            require("typescript-tools").setup({
-              server = opts,
-              settings = {
-                tsserver_plugins = {
-                  "@vue/typescript-plugin",
-                },
-              },
-              filetypes = {
-                "javascript",
-                "typescript",
-                "vue",
               },
             })
           end,
@@ -261,6 +248,18 @@ return {
           -- end,
         },
       }
+      -- require("typescript-tools").setup({
+      --   settings = {
+      --     tsserver_plugins = {
+      --       "@vue/typescript-plugin",
+      --     },
+      --   },
+      --   filetypes = {
+      --     "javascript",
+      --     "typescript",
+      --     "vue",
+      --   },
+      -- })
     end,
   },
 }
