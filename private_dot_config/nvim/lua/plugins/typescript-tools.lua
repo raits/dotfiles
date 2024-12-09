@@ -8,7 +8,7 @@ return {
 				filetypes = {
 					"javascript",
 					"typescript",
-					-- "vue",
+					"vue",
 				},
 				settings = {
 					capabilities = require("cmp_nvim_lsp").default_capabilities(),
