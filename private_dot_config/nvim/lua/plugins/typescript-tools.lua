@@ -1,7 +1,7 @@
 return {
 	{
 		"pmizio/typescript-tools.nvim",
-		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig", "hrsh7th/cmp-nvim-lsp" },
+		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig", "saghen/blink.cmp" },
 		-- opts = {},
 		opts = function()
 			return {
@@ -11,7 +11,7 @@ return {
 					"vue",
 				},
 				settings = {
-					capabilities = require("cmp_nvim_lsp").default_capabilities(),
+					capabilities = require('blink.cmp').get_lsp_capabilities(capabilities),
 					-- Might be required for Deno projects
 					-- root_dir = require("lspconfig").util.root_pattern_exclude({
 					-- 	root = { "package.json" },

@@ -43,3 +43,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+
+-- Copilot remaps
+vim.keymap.set("i", "<C-j>", "<Plug>(copilot-next)", { desc = "Copilot next" })
+vim.keymap.set("i", "<C-k>", "<Plug>(copilot-previous)", { desc = "Copilot previous" })
