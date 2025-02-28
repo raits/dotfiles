@@ -26,6 +26,7 @@ return {
 			{ "nvim-telescope/telescope.nvim" }, -- Use telescope for help actions
 			{ "nvim-lua/plenary.nvim" },
 		},
+		build = "make tiktoken",
 		opts = {
 			question_header = "## User ",
 			answer_header = "## Copilot ",
