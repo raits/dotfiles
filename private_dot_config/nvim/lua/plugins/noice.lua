@@ -1,13 +1,6 @@
 return {
 	"folke/noice.nvim",
 	event = "VeryLazy",
-	config = function()
-		require("notify").setup({
-			background_colour = "#000000",
-		})
-
-		vim.notify = require("notify")
-	end,
 	opts = {
 		-- add any options here
 		lsp = {
