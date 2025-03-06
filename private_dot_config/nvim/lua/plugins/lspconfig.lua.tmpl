@@ -212,6 +212,13 @@ return {
             server.capabilities = require('blink.cmp').get_lsp_capabilities(server.capabilities)
             require('lspconfig')[server_name].setup(server)
           end,
+					kotlin_language_server = function()
+						require("lspconfig").kotlin_language_server.setup({
+							init_options = {
+								storagePath = vim.fn.resolve(vim.fn.stdpath("cache") .. "/kotlin_language_server"),
+							},
+						})
+          end,
           jdtls = function()
             require('lspconfig').jdtls.setup({
               settings = {
