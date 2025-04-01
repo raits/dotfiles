@@ -212,12 +212,14 @@ return {
             server.capabilities = require('blink.cmp').get_lsp_capabilities(server.capabilities)
             require('lspconfig')[server_name].setup(server)
           end,
-					kotlin_language_server = function()
-						require("lspconfig").kotlin_language_server.setup({
-							init_options = {
-								storagePath = vim.fn.resolve(vim.fn.stdpath("cache") .. "/kotlin_language_server"),
-							},
-						})
+          {{- if eq (index . "work") 1 }}
+          -- work profile
+          kotlin_language_server = function()
+            require("lspconfig").kotlin_language_server.setup({
+              init_options = {
+                storagePath = vim.fn.resolve(vim.fn.stdpath("cache") .. "/kotlin_language_server"),
+              },
+            })
           end,
           jdtls = function()
             require('lspconfig').jdtls.setup({
@@ -244,9 +246,10 @@ return {
               }
             })
           end,
+          {{- end }}
           volar = function()
             require("lspconfig").volar.setup({
-              --filetypes = { "vue", "javascript", "typescript", "json" },
+              filetypes = { "vue", "javascript", "typescript", "json" },
 
               root_dir = require("lspconfig").util.root_pattern(
                 "vue.config.js",
@@ -254,11 +257,12 @@ return {
                 "nuxt.config.js",
                 "nuxt.config.ts",
                 "vite.config.js",
-                "vite.config.ts"
+                "vite.config.ts",
+                "vite.config.mts"
               ),
               init_options = {
                 vue = {
-                  hybridMode = true,
+                  hybridMode = false,
                 },
               },
             })
