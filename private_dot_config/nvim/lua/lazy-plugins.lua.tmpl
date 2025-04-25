@@ -20,13 +20,6 @@ require("lazy").setup({
 	-- fuzzy finder
 	require("plugins/telescope"),
 
-	{{- if eq (index . "work") 1 }}
-	-- work profile
-	require("plugins/nvim-java"),
-	{{- else }}
-	-- personal profile
-	{{- end }}
-
 	require("plugins/lspconfig"),
 
 	require("plugins/typescript-tools"),
@@ -46,8 +39,6 @@ require("lazy").setup({
 	require("plugins/lazydev"),
 
 	require("plugins/codecompanion"),
-
-	--require("plugins/copilot-chat"),
 
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
 	-- init.lua. If you want these files, they are in the repository, so you can just download them and
