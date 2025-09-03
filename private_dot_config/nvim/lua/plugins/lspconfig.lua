@@ -161,7 +161,6 @@ return {
 						},
 					},
 				},
-				volar = {},
 				tailwindcss = {
 					filetypes = vim.list_extend({ "rust" }, require("lspconfig").tailwindcss.filetypes or {}),
 					init_options = {
@@ -184,6 +183,7 @@ return {
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
+				"vue-language-server", -- Vue language server (for typescript-tools plugin)
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 			require("mason-lspconfig").setup({
@@ -194,26 +194,6 @@ return {
 						local server = servers[server_name] or {}
 						server.capabilities = require("blink.cmp").get_lsp_capabilities(server.capabilities)
 						require("lspconfig")[server_name].setup(server)
-					end,
-					volar = function()
-						require("lspconfig").volar.setup({
-							filetypes = { "vue", "javascript", "typescript", "json" },
-
-							root_dir = require("lspconfig").util.root_pattern(
-								"vue.config.js",
-								"vue.config.ts",
-								"nuxt.config.js",
-								"nuxt.config.ts",
-								"vite.config.js",
-								"vite.config.ts",
-								"vite.config.mts"
-							),
-							init_options = {
-								vue = {
-									hybridMode = false,
-								},
-							},
-						})
 					end,
 				},
 			})
