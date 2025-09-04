@@ -16,7 +16,6 @@ return {
 				{ "Bilal2453/luvit-meta", lazy = true },
 				-- Automatically install LSPs and related tools to stdpath for Neovim
 				{ "mason-org/mason.nvim", opts = {} }, -- NOTE: Must be loaded before dependants
-				"mason-org/mason-lspconfig.nvim",
 				"WhoIsSethDaniel/mason-tool-installer.nvim",
 				{ "j-hui/fidget.nvim", opts = {} },
 				"saghen/blink.cmp",
@@ -180,23 +179,32 @@ return {
 
 			-- You can add other tools here that you want Mason to install
 			-- for you, so that they are available from within Neovim.
-			local ensure_installed = vim.tbl_keys(servers or {})
-			vim.list_extend(ensure_installed, {
+			-- Note: Mason package names may differ from LSP server names
+			local mason_packages = {
+				"css-lsp", -- cssls server
+				"html-lsp", -- html server  
+				"lua-language-server", -- lua_ls server
+				"rust-analyzer", -- rust_analyzer server
+				"tailwindcss-language-server", -- tailwindcss server
 				"stylua", -- Used to format Lua code
 				"vue-language-server", -- Vue language server (for typescript-tools plugin)
-			})
+			}
+			local ensure_installed = mason_packages
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
-			require("mason-lspconfig").setup({
-				ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
-				automatic_installation = false,
-				handlers = {
-					function(server_name)
-						local server = servers[server_name] or {}
-						server.capabilities = require("blink.cmp").get_lsp_capabilities(server.capabilities)
-						require("lspconfig")[server_name].setup(server)
-					end,
-				},
-			})
+
+			-- Configure each LSP server using new Neovim 0.11 native approach
+			for server_name, server_config in pairs(servers) do
+				-- Add blink.cmp capabilities to the config
+				local config_with_capabilities = vim.tbl_deep_extend('force', server_config, {
+					capabilities = require("blink.cmp").get_lsp_capabilities(server_config.capabilities or {})
+				})
+				
+				-- Configure the server with our custom settings
+				vim.lsp.config(server_name, config_with_capabilities)
+				
+				-- Enable the server
+				vim.lsp.enable(server_name)
+			end
 		end,
 	},
 }
