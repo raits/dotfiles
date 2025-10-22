@@ -161,7 +161,10 @@ return {
 					},
 				},
 				tailwindcss = {
-					filetypes = vim.list_extend({ "rust" }, require("lspconfig").tailwindcss.filetypes or {}),
+					filetypes = vim.list_extend(
+					{ "rust" },
+					require("lspconfig.configs.tailwindcss").default_config.filetypes or {}
+				),
 					init_options = {
 						userLanguages = {
 							rust = "html",
