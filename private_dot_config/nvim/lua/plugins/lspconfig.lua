@@ -162,9 +162,9 @@ return {
 				},
 				tailwindcss = {
 					filetypes = vim.list_extend(
-					{ "rust" },
-					require("lspconfig.configs.tailwindcss").default_config.filetypes or {}
-				),
+						{ "rust" },
+						require("lspconfig.configs.tailwindcss").default_config.filetypes or {}
+					),
 					init_options = {
 						userLanguages = {
 							rust = "html",
@@ -185,12 +185,13 @@ return {
 			-- Note: Mason package names may differ from LSP server names
 			local mason_packages = {
 				"css-lsp", -- cssls server
-				"html-lsp", -- html server  
+				"html-lsp", -- html server
 				"lua-language-server", -- lua_ls server
 				"rust-analyzer", -- rust_analyzer server
 				"tailwindcss-language-server", -- tailwindcss server
 				"stylua", -- Used to format Lua code
 				"vue-language-server", -- Vue language server (for typescript-tools plugin)
+				"gopls", -- Go language server
 			}
 			local ensure_installed = mason_packages
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
@@ -198,13 +199,13 @@ return {
 			-- Configure each LSP server using new Neovim 0.11 native approach
 			for server_name, server_config in pairs(servers) do
 				-- Add blink.cmp capabilities to the config
-				local config_with_capabilities = vim.tbl_deep_extend('force', server_config, {
-					capabilities = require("blink.cmp").get_lsp_capabilities(server_config.capabilities or {})
+				local config_with_capabilities = vim.tbl_deep_extend("force", server_config, {
+					capabilities = require("blink.cmp").get_lsp_capabilities(server_config.capabilities or {}),
 				})
-				
+
 				-- Configure the server with our custom settings
 				vim.lsp.config(server_name, config_with_capabilities)
-				
+
 				-- Enable the server
 				vim.lsp.enable(server_name)
 			end
