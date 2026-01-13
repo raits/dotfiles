@@ -22,10 +22,6 @@ require("lazy").setup({
 
 	require("plugins/lspconfig"),
 
-	require("plugins/vue-plugin-installer"),
-	
-	require("plugins/typescript-tools"),
-
 	require("plugins/conform"),
 
 	require("plugins/blink"),

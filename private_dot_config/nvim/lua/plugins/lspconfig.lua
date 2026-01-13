@@ -22,6 +22,10 @@ return {
 			},
 		},
 		config = function()
+			-- Vue language server path from Mason's standard install location
+			local vue_language_server_path = vim.fn.stdpath("data")
+				.. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
+
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 				callback = function(event)
@@ -165,9 +169,37 @@ return {
 						{ "rust" },
 						require("lspconfig.configs.tailwindcss").default_config.filetypes or {}
 					),
+					settings = {
+						tailwindCSS = {
+							includeLanguages = {
+								rust = "html",
+							},
+						},
+					},
+				},
+				vtsls = {
+					filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+					settings = {
+						vtsls = {
+							tsserver = {
+								globalPlugins = {
+									{
+										name = "@vue/typescript-plugin",
+										location = vue_language_server_path,
+										languages = { "vue" },
+										configNamespace = "typescript",
+										enableForWorkspaceTypeScriptVersions = true,
+									},
+								},
+							},
+						},
+					},
+				},
+				vue_ls = {
+					filetypes = { "vue" },
 					init_options = {
-						userLanguages = {
-							rust = "html",
+						vue = {
+							hybridMode = true,
 						},
 					},
 				},
@@ -190,8 +222,10 @@ return {
 				"rust-analyzer", -- rust_analyzer server
 				"tailwindcss-language-server", -- tailwindcss server
 				"stylua", -- Used to format Lua code
-				"vue-language-server", -- Vue language server (for typescript-tools plugin)
+				"vue-language-server", -- Vue language server
+				"vtsls", -- TypeScript/JavaScript language server (works with Vue hybrid mode)
 				"gopls", -- Go language server
+				"templ", -- templ language server
 			}
 			local ensure_installed = mason_packages
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
